@@ -1,0 +1,167 @@
+/* Общие стили */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+header {
+    background-color: #4caf50;
+    color: white;
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+header h1 {
+    font-size: 2.5rem;
+}
+
+header p {
+    font-size: 1.2rem;
+}
+
+main {
+    padding: 2rem;
+}
+
+.lesson-content {
+    margin-bottom: 2rem;
+}
+
+.lesson-content h2 {
+    font-size: 2rem;
+    color: #4caf50;
+    margin-bottom: 1rem;
+}
+
+.lesson-content p {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.lesson-image {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    margin: 1rem 0;
+}
+
+/* Стиль для блоков с терминами и описаниями */
+.matching-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    position: relative;
+    width: 100%;
+}
+
+.terms, .definitions {
+    width: 45%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.term, .definition {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.term:hover, .definition:hover {
+    background-color: #e0f7fa;
+    transform: scale(1.05);
+}
+
+.term.dragging {
+    background-color: #b3e5fc;
+    opacity: 0.7;
+}
+
+.definition.highlight {
+    background-color: #c8e6c9;
+}
+
+/* Рисование линий */
+.lines-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Оформление для кнопки */
+button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Результаты */
+#matching-result {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #333;
+    color: white;
+}
+
+footer a {
+    color: #4caf50;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+.matched {
+    background-color: #d4edda;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+input[type="radio"] + span {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+input[type="radio"]:checked + span {
+    font-weight: bold;
+}
+
+.correct {
+    color: green;
+    font-weight: bold;
+}
+
+.incorrect {
+    color: red;
+    font-weight: bold;
+}

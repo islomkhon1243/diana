@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+		<h1><span id="user-name"></span>, добро пожаловать в мир природы!</h1>
+        <p>Изучите природные явления в увлекательных уроках.</p>
+    </header>
+
+    <main>
+        <section class="lesson-cards">
+            <div class="lesson-card">
+                <h2>Урок 1: Явления, связанные с водой</h2>
+                <img src="images/water.jpg" alt="Явления, связанные с водой">
+                <p>Познакомьтесь с дождём, снегом, реками и циклом воды в природе.</p>
+                <a href="lesson1.html" class="btn">Изучить урок</a>
+            </div>
+            <div class="lesson-card">
+                <h2>Урок 2: Атмосферные явления</h2>
+                <img src="images/atmosphere.jpg" alt="Атмосферные явления">
+                <p>Узнайте о облаках, громах, молниях и других атмосферных явлениях.</p>
+                <a href="lesson2.html" class="btn">Изучить урок</a>
+            </div>
+            <div class="lesson-card">
+                <h2>Урок 3: Явления, связанные с землёй</h2>
+                <img src="images/earth.jpg" alt="Явления, связанные с землёй">
+                <p>Изучите землетрясения, вулканы, горы и пещеры.</p>
+                <a href="lesson3.html" class="btn">Изучить урок</a>
+            </div>
+        </section>
+
+        <section class="lesson-cards">
+            <div class="lesson-card">
+                <h2>Урок 4: Явления, связанные с солнцем</h2>
+                <img src="images/sun.jpg" alt="Явления, связанные с солнцем">
+                <p>Разберитесь в феноменах, связанных с солнечной энергией: день и ночь, сезоны, тени.</p>
+                <a href="lesson4.html" class="btn">Изучить урок</a>
+            </div>
+            <div class="lesson-card">
+                <h2>Урок 5: Экстремальные природные явления</h2>
+                <img src="images/extreme.jpg" alt="Экстремальные природные явления">
+                <p>Торнадо, цунами, лавины и другие катастрофы.</p>
+                <a href="lesson5.html" class="btn">Изучить урок</a>
+            </div>
+            <div class="lesson-card">
+                <h2>Урок 6: Звёзды и планеты</h2>
+                <img src="images/space.jpg" alt="Звёзды и планеты">
+                <p>Изучите удивительный мир звёзд, Луны и полярного сияния.</p>
+                <a href="lesson6.html" class="btn">Изучить урок</a>
+            </div>
+        </section>
+		
+		<button id="logout-btn" class="btn">Выход</button>
+    </main>
+
+    <footer>
+		<a href="admin.html" style="color: white;">Страница администратора</a>
+        <p>&copy; 2024 Природные явления</p>
+    </footer>
+	
+	<script>
+        // Проверка входа
+        const userName = localStorage.getItem('userName');
+		const logoutButton = document.getElementById("logout-btn");
+        if (!userName) {
+            window.location.href = 'login.html'; // Перенаправление на страницу входа
+        } else {
+            document.getElementById('user-name').textContent = userName;
+        }
+		
+		function clearUser() {
+			localStorage.removeItem("userName");
+		}
+		
+		logoutButton.addEventListener("click", () => {
+			clearUser();
+			alert("Вы вышли из системы.");
+			document.location.reload(); // Перезагрузка страницы
+		});
+    </script>
+</body>
+</html>

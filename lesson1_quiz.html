@@ -1,0 +1,175 @@
+	<!DOCTYPE html>
+	<html lang="ru">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Урок 1: Задание</title>
+		<link rel="stylesheet" href="stylelesson.css">
+	</head>
+	<body>
+		<header>
+			<h1>Урок 1: Задание</h1>
+			<p>Проверьте свои знания о явлениях, связанных с водой</p>
+		</header>
+		<main>
+			<section class="quiz">
+				<h2>Проверочное задание</h2>
+				<form id="quiz-form">
+					<p><strong>1. Как образуется дождь?</strong></p>
+					<input type="radio" name="q1" value="2"> Когда воздух насыщается солью и она выпадает как дождь.<br>
+					<input type="radio" name="q1" value="1"> Когда водяной пар конденсируется и падает на землю в виде капель.<br>
+					<input type="radio" name="q1" value="3"> Когда вода испаряется, но не возвращается в землю.<br>
+
+					<p><strong>2. Что такое снег?</strong></p>
+					<input type="radio" name="q2" value="2"> Капли воды, замерзающие при падении на землю.<br>
+					<input type="radio" name="q2" value="3"> Водяной пар, который замерзает в воздухе.<br>
+					<input type="radio" name="q2" value="1"> Кристаллы льда, образующиеся в облаках.<br>
+
+					<button type="submit" id="submit-btn" class="btn">Проверить ответы</button>
+				</form>
+				<div id="result"></div>
+			</section>
+
+			<section class="lesson-content">
+				<h2>Сопоставьте термины и описания</h2>
+				<div class="matching-container">
+					<div class="terms">
+						<div class="term" draggable="true" data-id="1">Дождь</div>
+						<div class="term" draggable="true" data-id="2">Снег</div>
+						<div class="term" draggable="true" data-id="3">Река</div>
+						<div class="term" draggable="true" data-id="4">Цикл воды</div>
+					</div>
+					<div class="definitions">
+						<div class="definition" data-id="4">Процесс, включающий испарение и конденсацию воды</div>
+						<div class="definition" data-id="1">Выпадение капель воды из облаков</div>
+						<div class="definition" data-id="2">Замёрзшая вода, образующая кристаллы</div>
+						<div class="definition" data-id="3">Поток воды, движущийся к морю</div>
+					</div>
+				</div>
+				<button onclick="checkMatching()">Проверить ответы</button>
+				<p id="matching-result"></p>
+			</section>
+		</main>
+		<footer>
+			<a href="lesson1.html">Назад к уроку</a>
+		</footer>
+		<script>
+			const userName = localStorage.getItem('userName');
+			
+			document.getElementById('quiz-form').addEventListener('submit', function(event) {
+			event.preventDefault(); // Prevent form submission
+
+			// Correct answers
+			const correctAnswers = {
+				q1: "1", // Correct answer for question 1
+				q2: "1"  // Correct answer for question 2
+			};
+
+			// Track score and feedback
+			let score = 0;
+			let feedback = "";
+
+			// Get user answers
+			const userAnswers = new FormData(event.target);
+
+			// Check answers
+			for (let [question, correctAnswer] of Object.entries(correctAnswers)) {
+				const userAnswer = userAnswers.get(question);
+				if (userAnswer === correctAnswer) {
+					score++;
+				} else {
+					feedback += `<p>Неправильный ответ на вопрос ${question.slice(1)}.</p>`;
+				}
+			}
+
+			// Final feedback
+			const totalQuestions = Object.keys(correctAnswers).length;
+			feedback += `<p>Ваш результат: ${score} из ${totalQuestions}.</p>`;
+
+			// Display result
+			const resultDiv = document.getElementById('result');
+			resultDiv.innerHTML = feedback;
+		
+			saveResultToJSON(userName, "1", "1", score); // Замените ФИО на реальные данные
+		});
+			
+			function saveResultToJSON(fullName, lessonNumber, taskNumber, score) {
+				// Создаем объект результата
+				const result = {
+					fullName: fullName,
+					lessonNumber: lessonNumber,
+					taskNumber: taskNumber,
+					score: score,
+					timestamp: new Date().toISOString()
+				};
+
+				// Получаем существующие результаты из localStorage
+				let results = JSON.parse(localStorage.getItem('quizResults')) || [];
+
+				// Добавляем новый результат
+				results.push(result);
+
+				// Сохраняем обновленный JSON обратно в localStorage
+				localStorage.setItem('quizResults', JSON.stringify(results));
+			}
+			
+			document.addEventListener("DOMContentLoaded", () => {
+				const terms = document.querySelectorAll(".term");
+				const definitions = document.querySelectorAll(".definition");
+				const matchingPairs = {}; // Для хранения сопоставлений
+
+				// Логика drag and drop
+				terms.forEach(term => {
+					term.addEventListener("dragstart", (e) => {
+						e.dataTransfer.setData("term-id", term.dataset.id);
+					});
+				});
+
+				definitions.forEach(definition => {
+					definition.addEventListener("dragover", (e) => e.preventDefault());
+					definition.addEventListener("drop", (e) => {
+						e.preventDefault();
+						const termId = e.dataTransfer.getData("term-id");
+						const definitionId = definition.dataset.id;
+
+						// Проверка: если уже сопоставлено, ничего не делаем
+						if (termId in matchingPairs) return;
+						if (Object.values(matchingPairs).includes(definitionId)) return;
+
+						// Успешное сопоставление
+						matchingPairs[termId] = definitionId;
+
+						// Отключаем перетаскивание
+						const term = document.querySelector(`.term[data-id="${termId}"]`);
+						term.setAttribute("draggable", "false");
+						term.classList.add("matched");
+
+						definition.classList.add("matched");
+					});
+				});
+
+				// Проверка ответов
+				window.checkMatching = () => {
+					const correctPairs = {
+						"1": "1", // Дождь -> Выпадение капель воды из облаков
+						"2": "2", // Снег -> Замёрзшая вода, образующая кристаллы
+						"3": "3", // Река -> Поток воды, движущийся к морю
+						"4": "4"  // Цикл воды -> Процесс, включающий испарение и конденсацию воды
+					};
+
+					let correct = 0;
+					Object.entries(correctPairs).forEach(([termId, defId]) => {
+						if (matchingPairs[termId] === defId) correct++;
+					});
+
+					document.getElementById("matching-result").textContent = `Вы правильно сопоставили ${correct} из ${Object.keys(correctPairs).length} пар.`;
+					saveResultToJSON(userName, "1", "2", correct);
+				};
+				
+				
+			});
+			
+			
+		</script>
+	</body>
+	</html>   

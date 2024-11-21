@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-страница</title>
+    <link rel="stylesheet" href="stylelesson.css">
+	<style>
+        .hidden {
+            display: none;
+        }
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+	<div id="login-screen" class="login-container">
+        <h1>Введите пароль</h1>
+        <input type="password" id="admin-password" placeholder="Пароль">
+        <button id="login-button" class="btn">Войти</button>
+        <p id="error-message" style="color: red; display: none;">Неверный пароль!</p>
+    </div>
+	
+	<div id="admin-content" class="hidden">
+		<header>
+			<h1>Админ-страница</h1>
+			<p>Результаты проверочных заданий</p>
+		</header>
+		<main>
+			<section>
+				<button id="load-results" class="btn">Загрузить результаты</button>
+				<table id="results-table" border="1">
+					<thead>
+						<tr>
+							<th>ФИО</th>
+							<th>Урок №</th>
+							<th>Задание №</th>
+							<th>Баллы</th>
+							<th>Дата</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- Данные будут добавлены сюда динамически -->
+					</tbody>
+				</table>
+			</section>
+		</main>
+		<footer>
+			<a href="index.html">На главную</a>
+		</footer>
+	</div>
+    <script>
+		const ADMIN_PASSWORD = "diana123"; // Установите свой пароль
+
+        // Элементы
+        const loginScreen = document.getElementById('login-screen');
+        const adminContent = document.getElementById('admin-content');
+        const loginButton = document.getElementById('login-button');
+        const errorMessage = document.getElementById('error-message');
+
+        // Обработка входа
+        loginButton.addEventListener('click', () => {
+            const enteredPassword = document.getElementById('admin-password').value;
+
+            if (enteredPassword === ADMIN_PASSWORD) {
+                // Убираем экран входа и показываем контент
+                loginScreen.style.display = 'none';
+                adminContent.classList.remove('hidden');
+            } else {
+                // Показываем сообщение об ошибке
+                errorMessage.style.display = 'block';
+            }
+        });
+	
+        document.getElementById('load-results').addEventListener('click', () => {
+            // Получаем сохраненные данные из localStorage
+            const results = JSON.parse(localStorage.getItem('quizResults')) || [];
+
+            // Находим таблицу и очищаем её содержимое
+            const tbody = document.getElementById('results-table').querySelector('tbody');
+            tbody.innerHTML = "";
+
+            // Заполняем таблицу данными
+            results.forEach(result => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${result.fullName}</td>
+                    <td>${result.lessonNumber}</td>
+                    <td>${result.taskNumber}</td>
+                    <td>${result.score}</td>
+                    <td>${new Date(result.timestamp).toLocaleString()}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        });
+    </script>
+</body>
+</html>

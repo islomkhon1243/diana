@@ -1,0 +1,105 @@
+/* Общие стили */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+header {
+    background-color: #4caf50;
+    color: white;
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+header h1 {
+    font-size: 2.5rem;
+}
+
+header p {
+    font-size: 1.2rem;
+}
+
+main {
+    padding: 2rem;
+}
+
+/* Стили для карточек уроков */
+.lesson-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 карточки в ряд */
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.lesson-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.lesson-card:hover {
+    transform: translateY(-10px);
+}
+
+.lesson-card h2 {
+    font-size: 1.8rem;
+    color: #4caf50;
+    margin-bottom: 1rem;
+}
+
+.lesson-card img {
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+    margin: 0 auto 1rem;
+    border-radius: 8px;
+}
+
+.lesson-card p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.lesson-card .btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.lesson-card .btn:hover {
+    background-color: #45a049;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .lesson-cards {
+        grid-template-columns: repeat(2, 1fr); /* 2 карточки в ряд на средних экранах */
+    }
+}
+
+@media (max-width: 480px) {
+    .lesson-cards {
+        grid-template-columns: 1fr; /* 1 карточка в ряд на маленьких экранах */
+    }
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+footer p {
+    font-size: 1rem;
+}
